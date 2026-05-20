@@ -1,552 +1,1098 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexo Tech Core | Soluciones Tecnológicas Integrales</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            /* Colores de marca */
-            --bg-color: #05080e; 
-            --primary: #00f0ff; 
-            --secondary: #0072ff; 
-            --text-main: #c9d1d9;
-            --text-bright: #ffffff;
-            --glass-bg: rgba(10, 15, 24, 0.85);
-            --error: #f85149;
-            --border: rgba(0, 114, 255, 0.25);
-            --accent-glow: rgba(0, 240, 255, 0.4);
-            --whatsapp-color: #25D366;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-P95FZLWB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-        body, html {
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            height: 100%; width: 100%;
-            overflow: hidden;
-        }
+    gtag('config', 'GTM-P95FZLWB');
+  </script>
 
-        #networkCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+  <title>Nexo Tech Core | Soluciones Tecnológicas Integrales</title>
 
-        header {
-            position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(5, 8, 14, 0.9); backdrop-filter: blur(12px); z-index: 1000; border-bottom: 1px solid var(--border);
-        }
-        
-        .logo-container { display: flex; align-items: center; gap: 12px; }
-        
-        /* Efecto 3D para tu imagen ntc_icon.png */
-        .tech-icon-img { width: 42px; height: 42px; filter: drop-shadow(0 0 8px var(--accent-glow)); animation: pulse 3s infinite ease-in-out; border-radius: 50%; }
-        @keyframes pulse { 0%, 100% { filter: drop-shadow(0 0 5px var(--accent-glow)); transform: scale(1); } 50% { filter: drop-shadow(0 0 15px rgba(0, 114, 255, 0.8)); transform: scale(1.05); } }
-        
-        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-bright); letter-spacing: 0.5px; }
-        .logo span { 
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      /* Colores de marca */
+      --bg-color: #05080e;
+      --primary: #00f0ff;
+      --secondary: #0072ff;
+      --text-main: #c9d1d9;
+      --text-bright: #ffffff;
+      --glass-bg: rgba(10, 15, 24, 0.85);
+      --error: #f85149;
+      --border: rgba(0, 114, 255, 0.25);
+      --accent-glow: rgba(0, 240, 255, 0.4);
+      --whatsapp-color: #25D366;
+    }
 
-        .wrapper { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 100px 5% 70px 5%; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .page-tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 12px; flex-shrink: 0; overflow-x: auto; }
-        .page-tabs::-webkit-scrollbar { height: 0px; }
-        .tab-link { background: none; border: none; color: #8b949e; font-size: 0.9rem; font-weight: 600; cursor: pointer; padding: 8px 16px; transition: 0.3s; border-radius: 6px; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-        .tab-link:hover { color: var(--text-bright); background: rgba(255,255,255,0.03); }
-        .tab-link.active { color: var(--primary); background: rgba(0, 240, 255, 0.1); border-bottom: 2px solid var(--primary); }
+    body,
+    html {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
 
-        .main-grid { display: grid; grid-template-columns: 1fr 430px; gap: 5%; flex-grow: 1; align-items: start; height: calc(100% - 120px); overflow: hidden; }
+    #networkCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
 
-        .content-dynamic { height: 100%; overflow-y: auto; padding-right: 15px; padding-bottom: 30px; }
-        .content-dynamic::-webkit-scrollbar { width: 5px; }
-        .content-dynamic::-webkit-scrollbar-track { background: transparent; }
-        .content-dynamic::-webkit-scrollbar-thumb { background: rgba(0, 114, 255, 0.3); border-radius: 10px; }
-        .content-dynamic::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 8, 14, 0.9);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+    }
 
-        .tab-content { display: none; flex-direction: column; gap: 35px; opacity: 0; transition: opacity 0.4s ease; }
-        .tab-content.active { display: flex; opacity: 1; }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-        .info-text h2 { font-size: 2.6rem; color: var(--text-bright); margin-bottom: 15px; font-weight: 700; }
-        .info-text h2 span { color: var(--primary); }
-        .info-text p { font-size: 1.05rem; line-height: 1.6; color: #8b949e; text-align: justify; }
-        
-        .service-pillar { display: grid; grid-template-columns: 1fr 220px; gap: 25px; align-items: center; background: rgba(10, 15, 24, 0.5); border: 1px solid var(--border); padding: 25px; border-radius: 12px; transition: 0.3s; }
-        .service-pillar:hover { border-color: var(--primary); background: rgba(10, 15, 24, 0.8); box-shadow: 0 5px 25px rgba(0, 114, 255, 0.1); }
-        
-        .pillar-desc h3 { color: var(--text-bright); font-size: 1.3rem; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-        .pillar-desc h3 i { color: var(--primary); font-size: 1.1rem; }
-        .pillar-desc p { font-size: 0.95rem; color: #8b949e; line-height: 1.6; text-align: justify; margin-bottom: 10px; }
-        
-        .service-list { list-style: none; padding-left: 0; margin-top: 15px; }
-        .service-list li { font-size: 0.85rem; color: #c9d1d9; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .service-list li i { color: var(--primary); font-size: 0.7rem; }
+    /* Efecto 3D para tu imagen ntc_icon.png */
+    .tech-icon-img {
+      width: 42px;
+      height: 42px;
+      filter: drop-shadow(0 0 8px var(--accent-glow));
+      animation: pulse 3s infinite ease-in-out;
+      border-radius: 50%;
+    }
 
-        .image-showcase { width: 100%; height: 300px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.4); flex-shrink: 0; margin-bottom: 5px; }
-        .image-showcase img { width: 100%; height: 100%; object-fit: cover; }
+    @keyframes pulse {
 
-        .pillar-img { width: 100%; height: 180px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0, 240, 255, 0.2); box-shadow: 0 5px 15px rgba(0,0,0,0.3); background: #0d1117; }
-        .pillar-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      0%,
+      100% {
+        filter: drop-shadow(0 0 5px var(--accent-glow));
+        transform: scale(1);
+      }
 
-        .contact-card { background: var(--glass-bg); border: 1px solid var(--border); border-radius: 16px; padding: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); backdrop-filter: blur(8px); position: sticky; top: 0; }
-        .contact-card h3 { color: white; margin-bottom: 20px; font-size: 1.3rem; font-weight: 600; text-align: center; }
-        
-        .field { margin-bottom: 18px; position: relative; }
-        .field label { display: block; color: #8b949e; font-size: 0.75rem; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
-        .field input, .field textarea { width: 100%; padding: 12px; background: rgba(5, 8, 14, 0.9); border: 1px solid var(--border); border-radius: 6px; color: white; font-size: 0.95rem; transition: all 0.3s ease; }
-        .field input:focus, .field textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 8px rgba(0, 240, 255, 0.2); }
-        .field.error input, .field.error textarea { border-color: var(--error); }
-        .error-msg { color: var(--error); font-size: 0.75rem; margin-top: 4px; display: none; }
-        .field.error .error-msg { display: block; }
+      50% {
+        filter: drop-shadow(0 0 15px rgba(0, 114, 255, 0.8));
+        transform: scale(1.05);
+      }
+    }
 
-        .btn-send { width: 100%; padding: 14px; background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%); color: #05080e; border: none; border-radius: 6px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 5px; box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4); display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .btn-send:hover { box-shadow: 0 6px 20px rgba(0, 240, 255, 0.6); transform: translateY(-2px); color: white; }
-        .btn-send:disabled { background: #0d1624; border: 1px solid var(--border); color: #8b949e; cursor: not-allowed; transform: none; box-shadow: none; }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      letter-spacing: 0.5px;
+    }
 
-        footer { position: fixed; bottom: 0; left: 0; width: 100%; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(5, 8, 14, 0.9); border-top: 1px solid var(--border); z-index: 999; backdrop-filter: blur(5px); }
-        footer p { font-size: 0.8rem; color: #8b949e; }
-        .footer-socials { display: flex; gap: 20px; }
-        .social-icon { color: #8b949e; font-size: 1.1rem; transition: 0.3s; text-decoration: none; }
-        .social-icon:hover { color: var(--primary); transform: translateY(-2px); }
+    .logo span {
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        .whatsapp-float { position: fixed; bottom: 75px; right: 30px; width: 56px; height: 56px; background-color: var(--whatsapp-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 28px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 10000; text-decoration: none; transition: 0.3s; animation: whatsapp-glow 2s infinite ease-in-out; }
-        .whatsapp-float:hover { transform: scale(1.1); background-color: #20ba5a; }
-        @keyframes whatsapp-glow { 0%, 100% { box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4); } 50% { box-shadow: 0 4px 25px rgba(37, 211, 102, 0.7); } }
+    .wrapper {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      padding: 100px 5% 70px 5%;
+    }
 
-        /* Estilos del Sistema de Pop-up Frosted Glass */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 8, 14, 0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 5000;
-            justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-card {
-            background: var(--glass-bg); border: 1px solid var(--border); padding: 40px 30px;
-            border-radius: 16px; text-align: center; max-width: 420px; width: 90%;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6); transform: scale(0.8); transition: transform 0.3s ease;
-        }
-        .modal-overlay.active .modal-card { transform: scale(1); }
-        .modal-status-icon { font-size: 4rem; margin-bottom: 20px; display: inline-block; }
-        .modal-status-icon.success { color: #2ea043; filter: drop-shadow(0 0 10px rgba(46, 160, 67, 0.4)); }
-        .modal-status-icon.error { color: var(--error); filter: drop-shadow(0 0 10px rgba(248, 81, 73, 0.4)); }
-        .modal-card h3 { color: var(--text-bright); font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; }
-        .modal-card p { color: var(--text-main); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; }
-        .btn-modal-close {
-            padding: 12px 32px; background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
-            color: #05080e; border: none; font-weight: 700; border-radius: 6px; cursor: pointer; transition: 0.3s;
-        }
-        .btn-modal-close:hover { box-shadow: 0 0 15px var(--primary); color: white; }
+    .page-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      flex-shrink: 0;
+      overflow-x: auto;
+    }
 
-        @media (max-width: 1024px) {
-            body, html { overflow-y: auto; height: auto; }
-            .wrapper { height: auto; padding-top: 90px; padding-bottom: 120px; }
-            .main-grid { grid-template-columns: 1fr; gap: 40px; height: auto; overflow: visible; }
-            .content-dynamic { height: auto; overflow: visible; padding-right: 0; }
-            .service-pillar { grid-template-columns: 1fr; gap: 15px; }
-            .pillar-img { height: 180px; }
-            .whatsapp-float { bottom: 85px; right: 20px; }
-            footer { position: relative; margin-top: 40px; flex-direction: column; gap: 15px; text-align: center; }
-        }
-    </style>
+    .page-tabs::-webkit-scrollbar {
+      height: 0px;
+    }
+
+    .tab-link {
+      background: none;
+      border: none;
+      color: #8b949e;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 16px;
+      transition: 0.3s;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .tab-link:hover {
+      color: var(--text-bright);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tab-link.active {
+      color: var(--primary);
+      background: rgba(0, 240, 255, 0.1);
+      border-bottom: 2px solid var(--primary);
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 430px;
+      gap: 5%;
+      flex-grow: 1;
+      align-items: start;
+      height: calc(100% - 120px);
+      overflow: hidden;
+    }
+
+    .content-dynamic {
+      height: 100%;
+      overflow-y: auto;
+      padding-right: 15px;
+      padding-bottom: 30px;
+    }
+
+    .content-dynamic::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .content-dynamic::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .content-dynamic::-webkit-scrollbar-thumb {
+      background: rgba(0, 114, 255, 0.3);
+      border-radius: 10px;
+    }
+
+    .content-dynamic::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+      flex-direction: column;
+      gap: 35px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .tab-content.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .info-text h2 {
+      font-size: 2.6rem;
+      color: var(--text-bright);
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .info-text h2 span {
+      color: var(--primary);
+    }
+
+    .info-text p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #8b949e;
+      text-align: justify;
+    }
+
+    .service-pillar {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 25px;
+      align-items: center;
+      background: rgba(10, 15, 24, 0.5);
+      border: 1px solid var(--border);
+      padding: 25px;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+
+    .service-pillar:hover {
+      border-color: var(--primary);
+      background: rgba(10, 15, 24, 0.8);
+      box-shadow: 0 5px 25px rgba(0, 114, 255, 0.1);
+    }
+
+    .pillar-desc h3 {
+      color: var(--text-bright);
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pillar-desc h3 i {
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    .pillar-desc p {
+      font-size: 0.95rem;
+      color: #8b949e;
+      line-height: 1.6;
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+
+    .service-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 15px;
+    }
+
+    .service-list li {
+      font-size: 0.85rem;
+      color: #c9d1d9;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .service-list li i {
+      color: var(--primary);
+      font-size: 0.7rem;
+    }
+
+    .image-showcase {
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      flex-shrink: 0;
+      margin-bottom: 5px;
+    }
+
+    .image-showcase img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pillar-img {
+      width: 100%;
+      height: 180px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      background: #0d1117;
+    }
+
+    .pillar-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .contact-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 35px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+    }
+
+    .contact-card h3 {
+      color: white;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .field {
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .field label {
+      display: block;
+      color: #8b949e;
+      font-size: 0.75rem;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 12px;
+      background: rgba(5, 8, 14, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: white;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+    }
+
+    .field.error input,
+    .field.error textarea {
+      border-color: var(--error);
+    }
+
+    .error-msg {
+      color: var(--error);
+      font-size: 0.75rem;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .field.error .error-msg {
+      display: block;
+    }
+
+    .btn-send {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+      color: #05080e;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 5px;
+      box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-send:hover {
+      box-shadow: 0 6px 20px rgba(0, 240, 255, 0.6);
+      transform: translateY(-2px);
+      color: white;
+    }
+
+    .btn-send:disabled {
+      background: #0d1624;
+      border: 1px solid var(--border);
+      color: #8b949e;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 8, 14, 0.9);
+      border-top: 1px solid var(--border);
+      z-index: 999;
+      backdrop-filter: blur(5px);
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: #8b949e;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 20px;
+    }
+
+    .social-icon {
+      color: #8b949e;
+      font-size: 1.1rem;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .social-icon:hover {
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 75px;
+      right: 30px;
+      width: 56px;
+      height: 56px;
+      background-color: var(--whatsapp-color);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 28px;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      z-index: 10000;
+      text-decoration: none;
+      transition: 0.3s;
+      animation: whatsapp-glow 2s infinite ease-in-out;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      background-color: #20ba5a;
+    }
+
+    @keyframes whatsapp-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 4px 25px rgba(37, 211, 102, 0.7);
+      }
+    }
+
+    /* Estilos del Sistema de Pop-up Frosted Glass */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 8, 14, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 5000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      padding: 40px 30px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+      transform: scale(0.8);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+
+    .modal-status-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .modal-status-icon.success {
+      color: #2ea043;
+      filter: drop-shadow(0 0 10px rgba(46, 160, 67, 0.4));
+    }
+
+    .modal-status-icon.error {
+      color: var(--error);
+      filter: drop-shadow(0 0 10px rgba(248, 81, 73, 0.4));
+    }
+
+    .modal-card h3 {
+      color: var(--text-bright);
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .modal-card p {
+      color: var(--text-main);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .btn-modal-close {
+      padding: 12px 32px;
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+      color: #05080e;
+      border: none;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-modal-close:hover {
+      box-shadow: 0 0 15px var(--primary);
+      color: white;
+    }
+
+    @media (max-width: 1024px) {
+
+      body,
+      html {
+        overflow-y: auto;
+        height: auto;
+      }
+
+      .wrapper {
+        height: auto;
+        padding-top: 90px;
+        padding-bottom: 120px;
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        height: auto;
+        overflow: visible;
+      }
+
+      .content-dynamic {
+        height: auto;
+        overflow: visible;
+        padding-right: 0;
+      }
+
+      .service-pillar {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .pillar-img {
+        height: 180px;
+      }
+
+      .whatsapp-float {
+        bottom: 85px;
+        right: 20px;
+      }
+
+      footer {
+        position: relative;
+        margin-top: 40px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <canvas id="networkCanvas"></canvas>
+  <canvas id="networkCanvas"></canvas>
 
-    <header>
-        <div class="logo-container">
-            <img src="ntc_icon.png" alt="Nexo Tech Core Logo" class="tech-icon-img">
-            <div class="logo">Nexo Tech <span>Core</span></div>
-        </div>
-    </header>
+  <header>
+    <div class="logo-container">
+      <img src="ntc_icon.png" alt="Nexo Tech Core Logo" class="tech-icon-img">
+      <div class="logo">Nexo Tech <span>Core</span></div>
+    </div>
+  </header>
 
-    <a href="https://wa.me/527298098387" target="_blank" class="whatsapp-float" title="Contactar por WhatsApp">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+  <a href="https://wa.me/527298098387" target="_blank" class="whatsapp-float" title="Contactar por WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
 
-    <div class="wrapper">
-        <div class="page-tabs">
-            <button class="tab-link active" onclick="changeTab('software', this)"><i class="fa-solid fa-code"></i> Desarrollo de Software</button>
-            <button class="tab-link" onclick="changeTab('soporte', this)"><i class="fa-solid fa-server"></i> Soporte Técnico IT</button>
-            <button class="tab-link" onclick="changeTab('reparacion', this)"><i class="fa-solid fa-microchip"></i> Laboratorio Hardware</button>
-            <button class="tab-link" onclick="changeTab('metodologia', this)"><i class="fa-solid fa-diagram-project"></i> Metodología</button>
-        </div>
-
-        <div class="main-grid">
-            <div class="content-dynamic">
-                
-                <div id="tab-software" class="tab-content active">
-                    <div class="info-text">
-                        <h2>Arquitectura de <span>Software</span> Integral</h2>
-                        <p>En Nexo Tech Core conceptualizamos, diseñamos y desplegamos soluciones digitales a la medida de los desafíos de su organización. Nuestro enfoque combina ingeniería lógica avanzada con las metodologías ágiles más eficientes de la industria tecnológica actual.</p>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-laptop-code"></i> Desarrollo Web (Frontend)</h3>
-                            <p>Diseñamos interfaces de usuario web sofisticadas, interactivas e impecablemente limpias. Nos enfocamos minuciosamente en los estándares de experiencia de usuario (UX) y diseño visual (UI), garantizando que su plataforma web cargue en milisegundos, sea enteramente responsiva y mantenga una navegación fluida.</p>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Web UI"></div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-database"></i> Ingeniería Backend & APIs</h3>
-                            <p>Construimos el motor lógico y el núcleo de seguridad de sus aplicaciones. Estructuramos código backend robusto y modular en Java y Python, integrando bases de datos relacionales bajo esquemas de consultas SQL de alta velocidad. Diseñamos arquitecturas preparadas para soportar cargas masivas de peticiones.</p>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?q=80&w=600&auto=format&fit=crop" alt="Backend API"></div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-mobile-screen-button"></i> Aplicaciones Móviles Premium</h3>
-                            <p>Llevamos el valor de su compañía directamente a las manos de sus clientes. Desarrollamos aplicaciones móviles nativas e híbridas de nivel premium para iOS y Android. Cuidamos cada transición táctil y optimizamos el consumo energético para garantizar aplicaciones intuitivas y altamente eficientes.</p>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=600&auto=format&fit=crop" alt="Mobile App"></div>
-                    </div>
-                </div>
-
-                <div id="tab-soporte" class="tab-content">
-                    <div class="info-text">
-                        <h2>Soporte Técnico e <span>Infraestructura</span></h2>
-                        <p>Aseguramos la continuidad operativa de su empresa. No solo solucionamos problemas; implementamos ecosistemas, configuramos software especializado y capacitamos a su personal para maximizar la productividad y minimizar los tiempos de inactividad técnica.</p>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-chalkboard-user"></i> Consultoría y Capacitación IT</h3>
-                            <p>Guiamos a su equipo en la adopción de nuevas tecnologías. Brindamos asesoría experta para la toma de decisiones tecnológica, auditorías de sistemas, y sesiones de capacitación presencial o remota para el correcto uso del software corporativo.</p>
-                            <ul class="service-list">
-                                <li><i class="fa-solid fa-check"></i> Auditoría de seguridad y procesos IT.</li>
-                                <li><i class="fa-solid fa-check"></i> Elaboración de manuales y guías interactivas.</li>
-                                <li><i class="fa-solid fa-check"></i> Consultoría para migración a la nube (Cloud).</li>
-                            </ul>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600&auto=format&fit=crop" alt="IT Consulting"></div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-laptop-file"></i> Despliegue y Configuración</h3>
-                            <p>Nos encargamos de la instalación, configuración y actualización de paqueterías de software y sistemas operativos a nivel corporativo, asegurando compatibilidad total y optimización de licencias en todos los equipos de su empresa.</p>
-                            <ul class="service-list">
-                                <li><i class="fa-solid fa-check"></i> Instalación de Sistemas Operativos (Windows/macOS/Linux).</li>
-                                <li><i class="fa-solid fa-check"></i> Configuración de ERPs y CRMs empresariales.</li>
-                                <li><i class="fa-solid fa-check"></i> Depuración y actualización de software legacy.</li>
-                            </ul>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&w=600&auto=format&fit=crop" alt="Software Setup"></div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-network-wired"></i> Redes y Servidores 24/7</h3>
-                            <p>Diseño y mantenimiento preventivo de redes locales (LAN) y servidores físicos/virtuales. Monitoreamos constantemente el tráfico y la salud de sus discos duros para prevenir pérdidas de información catastróficas.</p>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop" alt="Server Network"></div>
-                    </div>
-                </div>
-
-                <div id="tab-reparacion" class="tab-content">
-                    <div class="info-text">
-                        <h2>Laboratorio de Hardware y <span>Micro-cirugía</span></h2>
-                        <p>Nuestro centro especializado en diagnóstico avanzado y rescate electrónico. Intervenimos desde reemplazos de componentes modulares hasta complejas reparaciones en placa base, devolviendo la vida y el rendimiento a su inversión tecnológica.</p>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-computer"></i> Laptops y Equipos de Escritorio</h3>
-                            <p>Reparación profunda para equipos PC y arquitecturas Apple (MacBook/iMac). Solucionamos fallos de encendido, sobrecalentamiento y realizamos upgrades de alto rendimiento para alargar la vida útil de sus equipos.</p>
-                            <ul class="service-list">
-                                <li><i class="fa-solid fa-wrench"></i> Actualización de estado sólido (SSD) y Memoria RAM.</li>
-                                <li><i class="fa-solid fa-wrench"></i> Reemplazo de displays, teclados y baterías internas.</li>
-                                <li><i class="fa-solid fa-wrench"></i> Mantenimiento preventivo (limpieza de disipación).</li>
-                            </ul>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?q=80&w=600&auto=format&fit=crop" alt="PC Repair"></div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-mobile-retro"></i> Smartphones y Tablets</h3>
-                            <p>Servicio técnico de precisión para dispositivos móviles corporativos y personales de las principales marcas. Utilizamos refacciones de calidad original para garantizar que la pantalla, batería y sensores funcionen como el primer día.</p>
-                            <ul class="service-list">
-                                <li><i class="fa-solid fa-wrench"></i> Cambio de pantallas OLED/LCD táctiles.</li>
-                                <li><i class="fa-solid fa-wrench"></i> Reemplazo de baterías degradadas y centros de carga.</li>
-                                <li><i class="fa-solid fa-wrench"></i> Restauración de software y rescate de equipos "brickeados".</li>
-                            </ul>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=600&auto=format&fit=crop" alt="Mobile Repair"></div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-microscope"></i> Micro-soldadura Avanzada</h3>
-                            <p>Cuando el daño es interno, nuestro laboratorio entra en acción. Mediante lectura de esquemáticos y herramientas térmicas de precisión, reparamos cortocircuitos a nivel de circuitos integrados (IC) en tarjetas madre (Motherboards).</p>
-                            <ul class="service-list">
-                                <li><i class="fa-solid fa-wrench"></i> Reparación de IC de carga, Touch o Audio.</li>
-                                <li><i class="fa-solid fa-wrench"></i> Reballing de procesadores (CPU/GPU) y memorias.</li>
-                                <li><i class="fa-solid fa-wrench"></i> Rescate de datos de placas base muertas.</li>
-                            </ul>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=600&auto=format&fit=crop" alt="Micro Soldering"></div>
-                    </div>
-                </div>
-
-                <div id="tab-metodologia" class="tab-content">
-                    <div class="info-text">
-                        <h2>Nuestra <span>Metodología</span> de Trabajo</h2>
-                        <p>Creemos firmemente que el éxito de cualquier proyecto o reparación radica en un proceso estructurado, transparente y predecible. Implementamos un marco de trabajo dividido en cuatro fases críticas para mitigar riesgos y asegurar la excelencia técnica absoluta.</p>
-                    </div>
-
-                    <div class="image-showcase">
-                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop" alt="Metodología Nexo Tech Core">
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Fase 01: Diagnóstico Integral</h3>
-                            <p>Ya sea para desarrollar un software desde cero o reparar una placa base, iniciamos analizando detalladamente el panorama. Levantamos requerimientos de forma precisa o utilizamos microscopios y multímetros para mapear el problema y eliminar cualquier brecha de incertidumbre operativa.</p>
-                        </div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-compass-drafting"></i> Fase 02: Planificación y Estrategia</h3>
-                            <p>Definimos la ruta más eficiente. En desarrollo, modelamos planos estructurales organizados por Sprints. En soporte y laboratorio, generamos una cotización transparente y solicitamos refacciones de calidad certificada, garantizando visibilidad completa para el cliente.</p>
-                        </div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-gears"></i> Fase 03: Ejecución Técnica</h3>
-                            <p>Manos a la obra. Escribimos código limpio, modular y documentado, o intervenimos físicamente los equipos en cuartos anti-estática. Aplicamos rigurosas normas de ensamblaje, instalación de licencias o programación ágil, manteniendo un estándar corporativo intachable.</p>
-                        </div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-shield-circle-check"></i> Fase 04: Calidad y Entrega</h3>
-                            <p>Ningún equipo o sistema sale de Nexo Tech Core sin ser sometido a pruebas de estrés. Realizamos auditorías de seguridad, pruebas de rendimiento en software y validación térmica en hardware. Entregamos plataformas y dispositivos listos para funcionar con garantía por escrito.</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="contact-card">
-                <h3 id="form-title">¿Iniciamos tu proyecto?</h3>
-                <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
-                    
-                    <input type="hidden" name="access_key" value="1d26aafe-706d-4478-ab0a-b3c30df427fa">
-                    <input type="hidden" id="selected-service" name="subject" value="Nueva solicitud desde la página web">
-                    
-                    <div class="field" id="f-name">
-                        <label>Nombre Completo / Empresa</label>
-                        <input type="text" id="name" name="Nombre" placeholder="Ej. Juan Pérez" required>
-                        <span class="error-msg">Mínimo 3 letras requeridas</span>
-                    </div>
-                    <div class="field" id="f-email">
-                        <label>Correo Electrónico</label>
-                        <input type="email" id="email" name="Email" placeholder="correo@ejemplo.com" required>
-                        <span class="error-msg">Ingresa un correo válido</span>
-                    </div>
-                    <div class="field" id="f-phone">
-                        <label>Número Telefónico</label>
-                        <input type="tel" id="phone" name="Telefono" placeholder="55 5555 5555" maxlength="12" required>
-                        <span class="error-msg">Se requieren 10 dígitos</span>
-                    </div>
-                    <div class="field" id="f-message">
-                        <label>Descripción del Requerimiento</label>
-                        <textarea id="message" name="Mensaje" rows="3" placeholder="¿Qué solución técnica necesitas hoy?..." required></textarea>
-                        <span class="error-msg">Por favor, detalla tu solicitud</span>
-                    </div>
-                    <button type="submit" class="btn-send">Enviar Solicitud</button>
-                </form>
-            </div>
-        </div>
+  <div class="wrapper">
+    <div class="page-tabs">
+      <button class="tab-link active" onclick="changeTab('software', this)"><i class="fa-solid fa-code"></i> Desarrollo
+        de Software</button>
+      <button class="tab-link" onclick="changeTab('soporte', this)"><i class="fa-solid fa-server"></i> Soporte Técnico
+        IT</button>
+      <button class="tab-link" onclick="changeTab('reparacion', this)"><i class="fa-solid fa-microchip"></i> Laboratorio
+        Hardware</button>
+      <button class="tab-link" onclick="changeTab('metodologia', this)"><i class="fa-solid fa-diagram-project"></i>
+        Metodología</button>
     </div>
 
-    <div id="statusModal" class="modal-overlay">
-        <div class="modal-card">
-            <i id="modalIcon" class="fa-solid modal-status-icon"></i>
-            <h3 id="modalTitle">Estado del Envío</h3>
-            <p id="modalMessage">Mensaje informativo de procesamiento técnico.</p>
-            <button type="button" onclick="closeModal()" class="btn-modal-close">Entendido</button>
+    <div class="main-grid">
+      <div class="content-dynamic">
+
+        <div id="tab-software" class="tab-content active">
+          <div class="info-text">
+            <h2>Arquitectura de <span>Software</span> Integral</h2>
+            <p>En Nexo Tech Core conceptualizamos, diseñamos y desplegamos soluciones digitales a la medida de los
+              desafíos de su organización. Nuestro enfoque combina ingeniería lógica avanzada con las metodologías
+              ágiles más eficientes de la industria tecnológica actual.</p>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-laptop-code"></i> Desarrollo Web (Frontend)</h3>
+              <p>Diseñamos interfaces de usuario web sofisticadas, interactivas e impecablemente limpias. Nos enfocamos
+                minuciosamente en los estándares de experiencia de usuario (UX) y diseño visual (UI), garantizando que
+                su plataforma web cargue en milisegundos, sea enteramente responsiva y mantenga una navegación fluida.
+              </p>
+            </div>
+            <div class="pillar-img"><img
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop"
+                alt="Web UI"></div>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-database"></i> Ingeniería Backend & APIs</h3>
+              <p>Construimos el motor lógico y el núcleo de seguridad de sus aplicaciones. Estructuramos código backend
+                robusto y modular en Java y Python, integrando bases de datos relacionales bajo esquemas de consultas
+                SQL de alta velocidad. Diseñamos arquitecturas preparadas para soportar cargas masivas de peticiones.
+              </p>
+            </div>
+            <div class="pillar-img"><img
+                src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?q=80&w=600&auto=format&fit=crop"
+                alt="Backend API"></div>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-mobile-screen-button"></i> Aplicaciones Móviles Premium</h3>
+              <p>Llevamos el valor de su compañía directamente a las manos de sus clientes. Desarrollamos aplicaciones
+                móviles nativas e híbridas de nivel premium para iOS y Android. Cuidamos cada transición táctil y
+                optimizamos el consumo energético para garantizar aplicaciones intuitivas y altamente eficientes.</p>
+            </div>
+            <div class="pillar-img"><img
+                src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=600&auto=format&fit=crop"
+                alt="Mobile App"></div>
+          </div>
         </div>
+
+        <div id="tab-soporte" class="tab-content">
+          <div class="info-text">
+            <h2>Soporte Técnico e <span>Infraestructura</span></h2>
+            <p>Aseguramos la continuidad operativa de su empresa. No solo solucionamos problemas; implementamos
+              ecosistemas, configuramos software especializado y capacitamos a su personal para maximizar la
+              productividad y minimizar los tiempos de inactividad técnica.</p>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-chalkboard-user"></i> Consultoría y Capacitación IT</h3>
+              <p>Guiamos a su equipo en la adopción de nuevas tecnologías. Brindamos asesoría experta para la toma de
+                decisiones tecnológica, auditorías de sistemas, y sesiones de capacitación presencial o remota para el
+                correcto uso del software corporativo.</p>
+              <ul class="service-list">
+                <li><i class="fa-solid fa-check"></i> Auditoría de seguridad y procesos IT.</li>
+                <li><i class="fa-solid fa-check"></i> Elaboración de manuales y guías interactivas.</li>
+                <li><i class="fa-solid fa-check"></i> Consultoría para migración a la nube (Cloud).</li>
+              </ul>
+            </div>
+            <div class="pillar-img"><img
+                src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600&auto=format&fit=crop"
+                alt="IT Consulting"></div>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-laptop-file"></i> Despliegue y Configuración</h3>
+              <p>Nos encargamos de la instalación, configuración y actualización de paqueterías de software y sistemas
+                operativos a nivel corporativo, asegurando compatibilidad total y optimización de licencias en todos los
+                equipos de su empresa.</p>
+              <ul class="service-list">
+                <li><i class="fa-solid fa-check"></i> Instalación de Sistemas Operativos (Windows/macOS/Linux).</li>
+                <li><i class="fa-solid fa-check"></i> Configuración de ERPs y CRMs empresariales.</li>
+                <li><i class="fa-solid fa-check"></i> Depuración y actualización de software legacy.</li>
+              </ul>
+            </div>
+            <div class="pillar-img"><img
+                src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&w=600&auto=format&fit=crop"
+                alt="Software Setup"></div>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-network-wired"></i> Redes y Servidores 24/7</h3>
+              <p>Diseño y mantenimiento preventivo de redes locales (LAN) y servidores físicos/virtuales. Monitoreamos
+                constantemente el tráfico y la salud de sus discos duros para prevenir pérdidas de información
+                catastróficas.</p>
+            </div>
+            <div class="pillar-img"><img
+                src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop"
+                alt="Server Network"></div>
+          </div>
+        </div>
+
+        <div id="tab-reparacion" class="tab-content">
+          <div class="info-text">
+            <h2>Laboratorio de Hardware y <span>Micro-cirugía</span></h2>
+            <p>Nuestro centro especializado en diagnóstico avanzado y rescate electrónico. Intervenimos desde reemplazos
+              de componentes modulares hasta complejas reparaciones en placa base, devolviendo la vida y el rendimiento
+              a su inversión tecnológica.</p>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-computer"></i> Laptops y Equipos de Escritorio</h3>
+              <p>Reparación profunda para equipos PC y arquitecturas Apple (MacBook/iMac). Solucionamos fallos de
+                encendido, sobrecalentamiento y realizamos upgrades de alto rendimiento para alargar la vida útil de sus
+                equipos.</p>
+              <ul class="service-list">
+                <li><i class="fa-solid fa-wrench"></i> Actualización de estado sólido (SSD) y Memoria RAM.</li>
+                <li><i class="fa-solid fa-wrench"></i> Reemplazo de displays, teclados y baterías internas.</li>
+                <li><i class="fa-solid fa-wrench"></i> Mantenimiento preventivo (limpieza de disipación).</li>
+              </ul>
+            </div>
+            <div class="pillar-img"><img
+                src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?q=80&w=600&auto=format&fit=crop"
+                alt="PC Repair"></div>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-mobile-retro"></i> Smartphones y Tablets</h3>
+              <p>Servicio técnico de precisión para dispositivos móviles corporativos y personales de las principales
+                marcas. Utilizamos refacciones de calidad original para garantizar que la pantalla, batería y sensores
+                funcionen como el primer día.</p>
+              <ul class="service-list">
+                <li><i class="fa-solid fa-wrench"></i> Cambio de pantallas OLED/LCD táctiles.</li>
+                <li><i class="fa-solid fa-wrench"></i> Reemplazo de baterías degradadas y centros de carga.</li>
+                <li><i class="fa-solid fa-wrench"></i> Restauración de software y rescate de equipos "brickeados".</li>
+              </ul>
+            </div>
+            <div class="pillar-img"><img
+                src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=600&auto=format&fit=crop"
+                alt="Mobile Repair"></div>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-microscope"></i> Micro-soldadura Avanzada</h3>
+              <p>Cuando el daño es interno, nuestro laboratorio entra en acción. Mediante lectura de esquemáticos y
+                herramientas térmicas de precisión, reparamos cortocircuitos a nivel de circuitos integrados (IC) en
+                tarjetas madre (Motherboards).</p>
+              <ul class="service-list">
+                <li><i class="fa-solid fa-wrench"></i> Reparación de IC de carga, Touch o Audio.</li>
+                <li><i class="fa-solid fa-wrench"></i> Reballing de procesadores (CPU/GPU) y memorias.</li>
+                <li><i class="fa-solid fa-wrench"></i> Rescate de datos de placas base muertas.</li>
+              </ul>
+            </div>
+            <div class="pillar-img"><img
+                src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=600&auto=format&fit=crop"
+                alt="Micro Soldering"></div>
+          </div>
+        </div>
+
+        <div id="tab-metodologia" class="tab-content">
+          <div class="info-text">
+            <h2>Nuestra <span>Metodología</span> de Trabajo</h2>
+            <p>Creemos firmemente que el éxito de cualquier proyecto o reparación radica en un proceso estructurado,
+              transparente y predecible. Implementamos un marco de trabajo dividido en cuatro fases críticas para
+              mitigar riesgos y asegurar la excelencia técnica absoluta.</p>
+          </div>
+
+          <div class="image-showcase">
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop"
+              alt="Metodología Nexo Tech Core">
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Fase 01: Diagnóstico Integral</h3>
+              <p>Ya sea para desarrollar un software desde cero o reparar una placa base, iniciamos analizando
+                detalladamente el panorama. Levantamos requerimientos de forma precisa o utilizamos microscopios y
+                multímetros para mapear el problema y eliminar cualquier brecha de incertidumbre operativa.</p>
+            </div>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-compass-drafting"></i> Fase 02: Planificación y Estrategia</h3>
+              <p>Definimos la ruta más eficiente. En desarrollo, modelamos planos estructurales organizados por Sprints.
+                En soporte y laboratorio, generamos una cotización transparente y solicitamos refacciones de calidad
+                certificada, garantizando visibilidad completa para el cliente.</p>
+            </div>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-gears"></i> Fase 03: Ejecución Técnica</h3>
+              <p>Manos a la obra. Escribimos código limpio, modular y documentado, o intervenimos físicamente los
+                equipos en cuartos anti-estática. Aplicamos rigurosas normas de ensamblaje, instalación de licencias o
+                programación ágil, manteniendo un estándar corporativo intachable.</p>
+            </div>
+          </div>
+
+          <div class="service-pillar">
+            <div class="pillar-desc">
+              <h3><i class="fa-solid fa-shield-circle-check"></i> Fase 04: Calidad y Entrega</h3>
+              <p>Ningún equipo o sistema sale de Nexo Tech Core sin ser sometido a pruebas de estrés. Realizamos
+                auditorías de seguridad, pruebas de rendimiento en software y validación térmica en hardware. Entregamos
+                plataformas y dispositivos listos para funcionar con garantía por escrito.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="contact-card">
+        <h3 id="form-title">¿Iniciamos tu proyecto?</h3>
+        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+
+          <input type="hidden" name="access_key" value="1d26aafe-706d-4478-ab0a-b3c30df427fa">
+          <input type="hidden" id="selected-service" name="subject" value="Nueva solicitud desde la página web">
+
+          <div class="field" id="f-name">
+            <label>Nombre Completo / Empresa</label>
+            <input type="text" id="name" name="Nombre" placeholder="Ej. Juan Pérez" required>
+            <span class="error-msg">Mínimo 3 letras requeridas</span>
+          </div>
+          <div class="field" id="f-email">
+            <label>Correo Electrónico</label>
+            <input type="email" id="email" name="Email" placeholder="correo@ejemplo.com" required>
+            <span class="error-msg">Ingresa un correo válido</span>
+          </div>
+          <div class="field" id="f-phone">
+            <label>Número Telefónico</label>
+            <input type="tel" id="phone" name="Telefono" placeholder="55 5555 5555" maxlength="12" required>
+            <span class="error-msg">Se requieren 10 dígitos</span>
+          </div>
+          <div class="field" id="f-message">
+            <label>Descripción del Requerimiento</label>
+            <textarea id="message" name="Mensaje" rows="3" placeholder="¿Qué solución técnica necesitas hoy?..."
+              required></textarea>
+            <span class="error-msg">Por favor, detalla tu solicitud</span>
+          </div>
+          <button type="submit" class="btn-send">Enviar Solicitud</button>
+        </form>
+      </div>
     </div>
+  </div>
 
-    <footer>
-        <p>&copy; 2026 Nexo Tech Core. Todos los derechos reservados.</p>
-        <div class="footer-socials">
-            <a href="#" target="_blank" class="social-icon" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" target="_blank" class="social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" target="_blank" class="social-icon" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-        </div>
-    </footer>
+  <div id="statusModal" class="modal-overlay">
+    <div class="modal-card">
+      <i id="modalIcon" class="fa-solid modal-status-icon"></i>
+      <h3 id="modalTitle">Estado del Envío</h3>
+      <p id="modalMessage">Mensaje informativo de procesamiento técnico.</p>
+      <button type="button" onclick="closeModal()" class="btn-modal-close">Entendido</button>
+    </div>
+  </div>
 
-    <script>
-        const formTitles = {
-            software: "¿Iniciamos tu proyecto?",
-            soporte: "¿Requieres consultoría IT?",
-            reparacion: "¿Tu equipo necesita reparación?",
-            metodologia: "¿Listo para comenzar?"
-        };
+  <footer>
+    <p>&copy; 2026 Nexo Tech Core. Todos los derechos reservados.</p>
+    <div class="footer-socials">
+      <a href="#" target="_blank" class="social-icon" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#" target="_blank" class="social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" target="_blank" class="social-icon" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+    </div>
+  </footer>
 
-        function changeTab(targetTab, buttonElement) {
-            document.querySelectorAll('.tab-link').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            buttonElement.classList.add('active');
-            const targetContent = document.getElementById(`tab-${targetTab}`);
-            if(targetContent) targetContent.classList.add('active');
+  <script>
+    const formTitles = {
+      software: "¿Iniciamos tu proyecto?",
+      soporte: "¿Requieres consultoría IT?",
+      reparacion: "¿Tu equipo necesita reparación?",
+      metodologia: "¿Listo para comenzar?"
+    };
 
-            document.getElementById('form-title').textContent = formTitles[targetTab];
-            document.getElementById('selected-service').value = "Interesado en: " + buttonElement.textContent.trim();
-            document.querySelector('.content-dynamic').scrollTop = 0;
+    function changeTab(targetTab, buttonElement) {
+      document.querySelectorAll('.tab-link').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      buttonElement.classList.add('active');
+      const targetContent = document.getElementById(`tab-${targetTab}`);
+      if (targetContent) targetContent.classList.add('active');
+
+      document.getElementById('form-title').textContent = formTitles[targetTab];
+      document.getElementById('selected-service').value = "Interesado en: " + buttonElement.textContent.trim();
+      document.querySelector('.content-dynamic').scrollTop = 0;
+    }
+
+    function openModal(isSuccess, title, message) {
+      const overlay = document.getElementById('statusModal');
+      const icon = document.getElementById('modalIcon');
+      const titleEl = document.getElementById('modalTitle');
+      const msgEl = document.getElementById('modalMessage');
+
+      icon.className = isSuccess ? "fa-solid fa-circle-check modal-status-icon success" : "fa-solid fa-circle-xmark modal-status-icon error";
+      titleEl.textContent = title;
+      msgEl.textContent = message;
+
+      overlay.classList.add('active');
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    function closeModal() {
+      document.getElementById('statusModal').classList.remove('active');
+    }
+
+    const canvas = document.getElementById('networkCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null, radius: 160 };
+
+    function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.6; this.speedY = (Math.random() - 0.5) * 0.6;
+      }
+      update() {
+        this.x += this.speedX; this.y += this.speedY;
+        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+      }
+      draw() {
+        ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    function createParticles() {
+      particles = []; const count = (canvas.width * canvas.height) / 9500;
+      for (let i = 0; i < count; i++) particles.push(new Particle());
+    }
+
+    function connect() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x; const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.strokeStyle = `rgba(0, 114, 255, ${0.15 - dist / 800})`;
+            ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+          }
         }
-
-        function openModal(isSuccess, title, message) {
-            const overlay = document.getElementById('statusModal');
-            const icon = document.getElementById('modalIcon');
-            const titleEl = document.getElementById('modalTitle');
-            const msgEl = document.getElementById('modalMessage');
-
-            icon.className = isSuccess ? "fa-solid fa-circle-check modal-status-icon success" : "fa-solid fa-circle-xmark modal-status-icon error";
-            titleEl.textContent = title;
-            msgEl.textContent = message;
-
-            overlay.classList.add('active');
+        if (mouse.x != null) {
+          const mdx = particles[i].x - mouse.x; const mdy = particles[i].y - mouse.y;
+          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < mouse.radius) {
+            ctx.strokeStyle = `rgba(0, 240, 255, ${1 - mdist / mouse.radius})`;
+            ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+          }
         }
+      }
+    }
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
-        });
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      connect(); requestAnimationFrame(animate);
+    }
 
-        function closeModal() {
-            document.getElementById('statusModal').classList.remove('active');
-        }
+    initCanvas(); createParticles(); animate();
+    window.addEventListener('resize', () => { initCanvas(); createParticles(); });
 
-        const canvas = document.getElementById('networkCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let mouse = { x: null, y: null, radius: 160 };
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length > 10) v = v.slice(0, 10);
+      let f = '';
+      if (v.length > 0) {
+        f = v.substring(0, 2);
+        if (v.length > 2) f += ' ' + v.substring(2, 6);
+        if (v.length > 6) f += ' ' + v.substring(6, 10);
+      }
+      e.target.value = f;
+    });
 
-        function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-        window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      let valid = true;
+      document.querySelectorAll('.field').forEach(f => f.classList.remove('error'));
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.6; this.speedY = (Math.random() - 0.5) * 0.6;
+      if (document.getElementById('name').value.trim().length < 3) { document.getElementById('f-name').classList.add('error'); valid = false; }
+      if (!document.getElementById('email').value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) { document.getElementById('f-email').classList.add('error'); valid = false; }
+      if (phoneInput.value.replace(/\s/g, '').length !== 10) { document.getElementById('f-phone').classList.add('error'); valid = false; }
+      if (document.getElementById('message').value.trim() === "") { document.getElementById('f-message').classList.add('error'); valid = false; }
+
+      if (valid) {
+        const btn = this.querySelector('.btn-send');
+        const originalText = btn.innerHTML;
+
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Conectando al Núcleo...';
+        btn.disabled = true;
+
+        fetch(this.action, {
+          method: this.method,
+          body: new FormData(this),
+          headers: { 'Accept': 'application/json' }
+        })
+          .then(response => {
+            if (response.ok) {
+              openModal(true, "¡Solicitud Enviada con Éxito!", "Tu requerimiento técnico ha sido procesado de forma correcta por el núcleo. Nos comunicaremos contigo a la brevedad.");
+              this.reset();
+            } else {
+              openModal(false, "Fallo en el Servidor", "El servidor de correos no pudo procesar la solicitud en este momento. Por favor, intenta de nuevo o comunícate vía WhatsApp.");
             }
-            update() {
-                this.x += this.speedX; this.y += this.speedY;
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-            }
-        }
+          })
+          .catch(error => {
+            openModal(false, "Fallo en la Conexión", "No se pudo establecer un enlace con la base de datos de correos. Revisa tu conexión a internet e inténtalo de nuevo.");
+          })
+          .finally(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          });
+      }
+    });
 
-        function createParticles() {
-            particles = []; const count = (canvas.width * canvas.height) / 9500;
-            for (let i = 0; i < count; i++) particles.push(new Particle());
-        }
-
-        function connect() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x; const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 120) {
-                        ctx.strokeStyle = `rgba(0, 114, 255, ${0.15 - dist/800})`;
-                        ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
-                    }
-                }
-                if (mouse.x != null) {
-                    const mdx = particles[i].x - mouse.x; const mdy = particles[i].y - mouse.y;
-                    const mdist = Math.sqrt(mdx*mdx + mdy*mdy);
-                    if (mdist < mouse.radius) {
-                        ctx.strokeStyle = `rgba(0, 240, 255, ${1 - mdist/mouse.radius})`;
-                        ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            connect(); requestAnimationFrame(animate);
-        }
-
-        initCanvas(); createParticles(); animate();
-        window.addEventListener('resize', () => { initCanvas(); createParticles(); });
-
-        const phoneInput = document.getElementById('phone');
-        phoneInput.addEventListener('input', (e) => {
-            let v = e.target.value.replace(/\D/g, '');
-            if (v.length > 10) v = v.slice(0, 10);
-            let f = '';
-            if (v.length > 0) {
-                f = v.substring(0, 2);
-                if (v.length > 2) f += ' ' + v.substring(2, 6);
-                if (v.length > 6) f += ' ' + v.substring(6, 10);
-            }
-            e.target.value = f;
-        });
-
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            let valid = true;
-            document.querySelectorAll('.field').forEach(f => f.classList.remove('error'));
-
-            if (document.getElementById('name').value.trim().length < 3) { document.getElementById('f-name').classList.add('error'); valid = false; }
-            if (!document.getElementById('email').value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) { document.getElementById('f-email').classList.add('error'); valid = false; }
-            if (phoneInput.value.replace(/\s/g, '').length !== 10) { document.getElementById('f-phone').classList.add('error'); valid = false; }
-            if (document.getElementById('message').value.trim() === "") { document.getElementById('f-message').classList.add('error'); valid = false; }
-
-            if (valid) {
-                const btn = this.querySelector('.btn-send');
-                const originalText = btn.innerHTML;
-                
-                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Conectando al Núcleo...';
-                btn.disabled = true;
-
-                fetch(this.action, {
-                    method: this.method,
-                    body: new FormData(this),
-                    headers: { 'Accept': 'application/json' }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        openModal(true, "¡Solicitud Enviada con Éxito!", "Tu requerimiento técnico ha sido procesado de forma correcta por el núcleo. Nos comunicaremos contigo a la brevedad.");
-                        this.reset();
-                    } else {
-                        openModal(false, "Fallo en el Servidor", "El servidor de correos no pudo procesar la solicitud en este momento. Por favor, intenta de nuevo o comunícate vía WhatsApp.");
-                    }
-                })
-                .catch(error => {
-                    openModal(false, "Fallo en la Conexión", "No se pudo establecer un enlace con la base de datos de correos. Revisa tu conexión a internet e inténtalo de nuevo.");
-                })
-                .finally(() => {
-                    btn.innerHTML = originalText; 
-                    btn.disabled = false;
-                });
-            }
-        });
-
-        document.querySelectorAll('input, textarea').forEach(el => {
-            el.addEventListener('input', () => el.parentElement.classList.remove('error'));
-        });
-    </script>
+    document.querySelectorAll('input, textarea').forEach(el => {
+      el.addEventListener('input', () => el.parentElement.classList.remove('error'));
+    });
+  </script>
 </body>
+
 </html>
