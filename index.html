@@ -15,430 +15,424 @@
     </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts: Inter para un look muy limpio y corporativo -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            /* Colores de marca enfocados en ventas (Trust Design) */
-            --bg-color: #f4f7f9; /* Gris perla muy limpio */
-            --surface-color: #ffffff; /* Blanco puro para tarjetas */
-            --primary: #0056b3; /* Azul corporativo de confianza */
-            --secondary: #00a8ff; /* Azul claro vibrante */
-            --text-heading: #111827; /* Gris muy oscuro para títulos (legibilidad) */
-            --text-main: #4b5563; /* Gris medio para lectura cómoda */
-            --border: #e5e7eb;
-            --accent-glow: rgba(0, 86, 179, 0.15);
-            --cta-color: #10b981; /* Verde esmeralda para conversiones */
-            --whatsapp-color: #25D366;
+            /* Paleta Clean Tech */
+            --bg-body: #f8fafc; /* Gris azulado muy claro */
+            --surface-card: #ffffff;
+            --text-dark: #0f172a; /* Slate 900 - Casi negro para títulos */
+            --text-muted: #475569; /* Slate 600 - Gris para párrafos */
+            --primary: #2563eb; /* Blue 600 - Azul vibrante y profesional */
+            --primary-hover: #1d4ed8;
+            --border-color: #e2e8f0;
+            --cta-btn: #10b981; /* Emerald 500 - Acción positiva */
+            --cta-hover: #059669;
+            --whatsapp: #25D366;
             --error: #ef4444;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-muted);
             height: 100%; width: 100%;
-            overflow: hidden;
+            overflow: hidden; /* Mantenemos el scroll interno para las dos columnas */
         }
 
-        #networkCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-
+        /* --- HEADER --- */
         header {
-            position: fixed; top: 0; width: 100%; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); z-index: 1000; 
-            border-bottom: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            position: fixed; top: 0; width: 100%; padding: 18px 6%; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.98); border-bottom: 1px solid var(--border-color); z-index: 1000; 
+            box-shadow: var(--shadow-sm);
         }
         
-        .logo-container { display: flex; align-items: center; gap: 12px; }
-        
-        .tech-icon-img { width: 45px; height: 45px; border-radius: 50%; box-shadow: 0 4px 10px var(--accent-glow); }
-        
-        .logo { font-size: 1.6rem; font-weight: 800; color: var(--text-heading); letter-spacing: -0.5px; }
+        .logo-container { display: flex; align-items: center; gap: 14px; }
+        .tech-icon-img { width: 40px; height: 40px; border-radius: 8px; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-dark); letter-spacing: -0.5px; }
         .logo span { color: var(--primary); }
+        .header-phone { font-weight: 600; color: var(--text-dark); font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .header-phone i { color: var(--primary); }
 
-        .wrapper { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 90px 5% 70px 5%; }
+        /* --- ESTRUCTURA PRINCIPAL --- */
+        .wrapper { display: flex; flex-direction: column; height: 100vh; padding: 100px 6% 80px 6%; max-width: 1600px; margin: 0 auto; }
 
+        /* --- TABS REDISEÑADOS (Clean UI) --- */
         .page-tabs { 
-            display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 2px solid var(--border); 
-            padding-bottom: 15px; flex-shrink: 0; overflow-x: auto; 
+            display: flex; gap: 30px; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); 
+            padding-bottom: 0px; flex-shrink: 0; overflow-x: auto; 
         }
         .page-tabs::-webkit-scrollbar { height: 0px; }
         
-        /* Botones de navegación tipo Píldora (Mejora UX) */
         .tab-link { 
-            background: var(--surface-color); border: 1px solid var(--border); color: var(--text-main); 
-            font-size: 0.95rem; font-weight: 600; cursor: pointer; padding: 10px 20px; transition: all 0.3s ease; 
-            border-radius: 50px; display: flex; align-items: center; gap: 8px; white-space: nowrap;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            background: transparent; border: none; color: var(--text-muted); 
+            font-size: 1.05rem; font-weight: 600; cursor: pointer; padding: 12px 5px; transition: all 0.2s ease; 
+            display: flex; align-items: center; gap: 10px; white-space: nowrap;
+            border-bottom: 3px solid transparent; margin-bottom: -2px; /* Se superpone al borde contenedor */
+            font-family: inherit;
         }
-        .tab-link:hover { color: var(--primary); border-color: var(--primary); transform: translateY(-1px); }
+        .tab-link:hover { color: var(--text-dark); }
         .tab-link.active { 
-            color: #ffffff; background: var(--primary); border-color: var(--primary); 
-            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3); 
+            color: var(--primary); border-bottom-color: var(--primary); 
         }
 
-        .main-grid { display: grid; grid-template-columns: 1fr 420px; gap: 4%; flex-grow: 1; align-items: start; height: calc(100% - 120px); overflow: hidden; }
+        .main-grid { display: grid; grid-template-columns: 1fr 400px; gap: 5%; flex-grow: 1; align-items: start; height: calc(100% - 130px); overflow: hidden; }
 
-        .content-dynamic { height: 100%; overflow-y: auto; padding-right: 15px; padding-bottom: 30px; }
+        /* --- ÁREA DE CONTENIDO (Izquierda) --- */
+        .content-dynamic { height: 100%; overflow-y: auto; padding-right: 20px; padding-bottom: 40px; }
         .content-dynamic::-webkit-scrollbar { width: 6px; }
-        .content-dynamic::-webkit-scrollbar-track { background: transparent; }
+        .content-dynamic::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
         .content-dynamic::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .content-dynamic::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+        .content-dynamic::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        .tab-content { display: none; flex-direction: column; gap: 25px; opacity: 0; transition: opacity 0.4s ease; }
-        .tab-content.active { display: flex; opacity: 1; }
+        .tab-content { display: none; flex-direction: column; gap: 30px; opacity: 0; transition: opacity 0.4s ease; animation: fadeIn 0.4s ease forwards;}
+        .tab-content.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .info-text { background: var(--surface-color); padding: 30px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .info-text h2 { font-size: 2.2rem; color: var(--text-heading); margin-bottom: 12px; font-weight: 800; letter-spacing: -0.5px;}
-        .info-text h2 span { color: var(--primary); }
-        .info-text p { font-size: 1.1rem; line-height: 1.7; color: var(--text-main); }
+        .info-header { margin-bottom: 10px; }
+        .info-header h2 { font-size: 2.4rem; color: var(--text-dark); margin-bottom: 15px; font-weight: 800; letter-spacing: -1px; line-height: 1.2;}
+        .info-header p { font-size: 1.15rem; line-height: 1.7; color: var(--text-muted); max-width: 900px; }
         
-        .service-pillar { 
-            display: grid; grid-template-columns: 1fr 240px; gap: 25px; align-items: center; 
-            background: var(--surface-color); border: 1px solid var(--border); padding: 25px; 
-            border-radius: 12px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.03); 
+        /* TARJETAS DE SERVICIO (Clean Layout) */
+        .service-card { 
+            display: grid; grid-template-columns: 1fr 280px; gap: 0; 
+            background: var(--surface-card); border: 1px solid var(--border-color); 
+            border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
-        .service-pillar:hover { 
-            border-color: var(--secondary); box-shadow: 0 8px 24px rgba(0, 86, 179, 0.1); transform: translateY(-2px); 
-        }
+        .service-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
         
-        .pillar-desc h3 { color: var(--text-heading); font-size: 1.35rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
-        .pillar-desc h3 i { color: var(--primary); font-size: 1.2rem; }
-        .pillar-desc p { font-size: 0.95rem; color: var(--text-main); line-height: 1.6; text-align: justify; margin-bottom: 12px; }
+        .card-body { padding: 35px; }
+        .card-body h3 { color: var(--text-dark); font-size: 1.4rem; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; font-weight: 700; }
+        .card-body h3 i { color: var(--primary); font-size: 1.3rem; background: #eff6ff; padding: 10px; border-radius: 8px; }
+        .card-body p { font-size: 1rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
         
-        .service-list { list-style: none; padding-left: 0; }
-        .service-list li { font-size: 0.9rem; color: var(--text-heading); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-weight: 500; }
-        .service-list li i { color: var(--cta-color); font-size: 0.9rem; } /* Palomitas verdes para dar seguridad */
+        .check-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .check-list li { font-size: 0.95rem; color: var(--text-dark); display: flex; align-items: flex-start; gap: 12px; font-weight: 500; }
+        .check-list li i { color: var(--cta-btn); font-size: 1rem; margin-top: 2px; }
 
-        .image-showcase { width: 100%; height: 300px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.1); flex-shrink: 0; margin-bottom: 5px; }
-        .image-showcase img { width: 100%; height: 100%; object-fit: cover; }
+        .card-img { width: 100%; height: 100%; border-left: 1px solid var(--border-color); overflow: hidden;}
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .service-card:hover .card-img img { transform: scale(1.05); }
 
-        .pillar-img { width: 100%; height: 100%; min-height: 190px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .pillar-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: 0.5s; }
-        .service-pillar:hover .pillar-img img { transform: scale(1.05); }
+        .hero-img { width: 100%; height: 350px; border-radius: 16px; overflow: hidden; margin-bottom: 20px; }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Formulario enfocado a Conversión (Ventas) */
-        .contact-card { 
-            background: var(--surface-color); border: 1px solid var(--border); border-radius: 16px; 
-            padding: 35px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: sticky; top: 0; 
+        /* --- FORMULARIO DE VENTAS (Derecha) --- */
+        .contact-panel { 
+            background: var(--surface-card); border: 1px solid var(--border-color); border-radius: 16px; 
+            padding: 35px 30px; box-shadow: var(--shadow-lg); position: sticky; top: 0; 
         }
-        .contact-card h3 { color: var(--text-heading); margin-bottom: 25px; font-size: 1.4rem; font-weight: 800; text-align: center; }
+        .contact-panel h3 { color: var(--text-dark); margin-bottom: 10px; font-size: 1.5rem; font-weight: 800; text-align: left; }
+        .contact-panel > p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 25px; text-align: left; }
         
-        .field { margin-bottom: 20px; position: relative; }
-        .field label { display: block; color: var(--text-heading); font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .field input, .field textarea { 
-            width: 100%; padding: 14px; background: #f9fafb; border: 1px solid #d1d5db; 
-            border-radius: 8px; color: var(--text-heading); font-size: 1rem; transition: all 0.3s ease; 
+        .input-group { margin-bottom: 20px; position: relative; }
+        .input-group label { display: block; color: var(--text-dark); font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
+        .input-group input, .input-group textarea { 
+            width: 100%; padding: 14px 16px; background: var(--bg-body); border: 1px solid #cbd5e1; 
+            border-radius: 8px; color: var(--text-dark); font-size: 1rem; transition: all 0.2s ease; 
+            font-family: inherit;
         }
-        .field input:focus, .field textarea:focus { border-color: var(--primary); background: #ffffff; outline: none; box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.1); }
-        .field.error input, .field.error textarea { border-color: var(--error); background: #fef2f2; }
-        .error-msg { color: var(--error); font-size: 0.8rem; margin-top: 6px; display: none; font-weight: 500; }
-        .field.error .error-msg { display: block; }
-
-        /* Botón CTA (Call to Action) */
-        .btn-send { 
-            width: 100%; padding: 16px; background: var(--cta-color); color: white; border: none; 
-            border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: 0.3s; 
-            margin-top: 10px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); display: flex; justify-content: center; align-items: center; gap: 10px; 
+        .input-group input:focus, .input-group textarea:focus { 
+            border-color: var(--primary); background: var(--surface-card); outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); 
         }
-        .btn-send:hover { background: #059669; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); transform: translateY(-2px); }
-        .btn-send:disabled { background: #d1d5db; color: #9ca3af; cursor: not-allowed; transform: none; box-shadow: none; }
+        .input-group.error input, .input-group.error textarea { border-color: var(--error); background: #fef2f2; }
+        .error-txt { color: var(--error); font-size: 0.8rem; margin-top: 6px; display: none; font-weight: 500; }
+        .input-group.error .error-txt { display: block; }
 
+        .btn-submit { 
+            width: 100%; padding: 16px; background: var(--cta-btn); color: white; border: none; 
+            border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: background 0.3s, transform 0.1s; 
+            margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; font-family: inherit;
+        }
+        .btn-submit:hover { background: var(--cta-hover); }
+        .btn-submit:active { transform: scale(0.98); }
+        .btn-submit:disabled { background: #cbd5e1; cursor: not-allowed; }
+
+        /* --- FOOTER & EXTRAS --- */
         footer { 
-            position: fixed; bottom: 0; left: 0; width: 100%; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; 
-            background: var(--surface-color); border-top: 1px solid var(--border); z-index: 999; box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05); 
+            position: fixed; bottom: 0; left: 0; width: 100%; padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; 
+            background: var(--surface-card); border-top: 1px solid var(--border-color); z-index: 999; 
         }
-        footer p { font-size: 0.85rem; color: var(--text-main); font-weight: 500; }
-        .footer-socials { display: flex; gap: 20px; }
-        .social-icon { color: var(--text-main); font-size: 1.2rem; transition: 0.3s; text-decoration: none; }
-        .social-icon:hover { color: var(--primary); transform: translateY(-3px); }
-
+        footer p { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+        
         .whatsapp-float { 
-            position: fixed; bottom: 80px; right: 30px; width: 60px; height: 60px; background-color: var(--whatsapp-color); 
-            border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 32px; 
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4); z-index: 10000; text-decoration: none; transition: 0.3s; 
-            animation: whatsapp-glow 2s infinite ease-in-out; 
+            position: fixed; bottom: 90px; right: 40px; width: 65px; height: 65px; background-color: var(--whatsapp); 
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 34px; 
+            box-shadow: var(--shadow-lg); z-index: 10000; text-decoration: none; transition: transform 0.2s ease; 
         }
-        .whatsapp-float:hover { transform: scale(1.1); background-color: #1ea952; }
-        @keyframes whatsapp-glow { 0%, 100% { box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); } 50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.6); } }
+        .whatsapp-float:hover { transform: scale(1.1); }
 
-        /* Estilos Pop-up */
+        /* --- MODAL POPUP --- */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(5px); z-index: 5000;
+            background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 5000;
             justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;
         }
         .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-card {
-            background: var(--surface-color); border: 1px solid var(--border); padding: 40px 30px;
-            border-radius: 16px; text-align: center; max-width: 420px; width: 90%;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2); transform: scale(0.8); transition: transform 0.3s ease;
+        .modal-box {
+            background: var(--surface-card); border-radius: 20px; padding: 40px; text-align: center; max-width: 400px; width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(20px); transition: transform 0.3s ease;
         }
-        .modal-overlay.active .modal-card { transform: scale(1); }
-        .modal-status-icon { font-size: 4.5rem; margin-bottom: 20px; display: inline-block; }
-        .modal-status-icon.success { color: var(--cta-color); }
-        .modal-status-icon.error { color: var(--error); }
-        .modal-card h3 { color: var(--text-heading); font-size: 1.6rem; margin-bottom: 12px; font-weight: 800; }
-        .modal-card p { color: var(--text-main); font-size: 1rem; line-height: 1.6; margin-bottom: 25px; }
-        .btn-modal-close {
-            padding: 14px 35px; background: var(--primary); color: white; border: none; font-size: 1rem;
-            font-weight: 700; border-radius: 8px; cursor: pointer; transition: 0.3s;
+        .modal-overlay.active .modal-box { transform: translateY(0); }
+        .modal-icon { font-size: 5rem; margin-bottom: 20px; }
+        .modal-icon.success { color: var(--cta-btn); }
+        .modal-icon.error { color: var(--error); }
+        .modal-box h3 { color: var(--text-dark); font-size: 1.6rem; margin-bottom: 12px; font-weight: 800; }
+        .modal-box p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.5; margin-bottom: 30px; }
+        .btn-close-modal {
+            padding: 14px 40px; background: var(--text-dark); color: white; border: none; font-size: 1.05rem;
+            font-weight: 600; border-radius: 10px; cursor: pointer; transition: 0.2s; font-family: inherit; width: 100%;
         }
-        .btn-modal-close:hover { background: #004085; box-shadow: 0 4px 15px rgba(0, 86, 179, 0.3); }
+        .btn-close-modal:hover { background: #334155; }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1100px) {
             body, html { overflow-y: auto; height: auto; }
-            .wrapper { height: auto; padding-top: 100px; padding-bottom: 120px; }
-            .main-grid { grid-template-columns: 1fr; gap: 40px; height: auto; overflow: visible; }
+            .wrapper { height: auto; padding-top: 100px; padding-bottom: 130px; }
+            .main-grid { grid-template-columns: 1fr; gap: 50px; height: auto; overflow: visible; }
             .content-dynamic { height: auto; overflow: visible; padding-right: 0; }
-            .service-pillar { grid-template-columns: 1fr; gap: 20px; }
-            .pillar-img { height: 220px; }
-            .whatsapp-float { bottom: 85px; right: 20px; width: 55px; height: 55px; font-size: 28px;}
-            footer { position: relative; margin-top: 40px; flex-direction: column; gap: 15px; text-align: center; }
+            .service-card { grid-template-columns: 1fr; }
+            .card-img { height: 250px; border-left: none; border-top: 1px solid var(--border-color); }
+            .whatsapp-float { bottom: 90px; right: 20px; width: 55px; height: 55px; font-size: 28px;}
+            footer { flex-direction: column; gap: 10px; text-align: center; }
+            .header-phone { display: none; } /* Ocultar teléfono en header móvil para ahorrar espacio */
         }
     </style>
 </head>
 <body>
 
-    <canvas id="networkCanvas"></canvas>
-
     <header>
         <div class="logo-container">
             <img src="ntc_icon.png" alt="Nexo Tech Core Logo" class="tech-icon-img">
-            <div class="logo">Nexo Tech <span>Core</span></div>
+            <div class="logo">Nexo <span>Tech</span> Core</div>
+        </div>
+        <div class="header-phone">
+            <i class="fa-solid fa-phone"></i> (729) 809-8387
         </div>
     </header>
 
-    <a href="https://wa.me/527298098387" target="_blank" class="whatsapp-float" title="Contactar por WhatsApp para Urgencias">
+    <a href="https://wa.me/527298098387" target="_blank" class="whatsapp-float" title="Soporte Inmediato por WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
     <div class="wrapper">
-        <!-- Reordenamiento estratégico: Hardware y Urgencias primero -->
+        
         <div class="page-tabs">
-            <button class="tab-link active" onclick="changeTab('reparacion', this)"><i class="fa-solid fa-microchip"></i> Reparación y Mantenimiento PC</button>
-            <button class="tab-link" onclick="changeTab('software', this)"><i class="fa-solid fa-code"></i> Desarrollo de Software</button>
-            <button class="tab-link" onclick="changeTab('soporte', this)"><i class="fa-solid fa-server"></i> Soporte IT y Redes</button>
-            <button class="tab-link" onclick="changeTab('metodologia', this)"><i class="fa-solid fa-shield-halved"></i> Garantía y Metodología</button>
+            <button class="tab-link active" onclick="changeTab('reparacion', this)">Soporte y Reparación PC</button>
+            <button class="tab-link" onclick="changeTab('software', this)">Desarrollo Web y Apps</button>
+            <button class="tab-link" onclick="changeTab('soporte', this)">Infraestructura IT</button>
+            <button class="tab-link" onclick="changeTab('metodologia', this)">Nuestra Metodología</button>
         </div>
 
         <div class="main-grid">
             <div class="content-dynamic">
                 
-                <!-- PESTAÑA 1: REPARACIÓN (Activa por defecto para conversiones rápidas) -->
+                <!-- PESTAÑA 1: REPARACIÓN (Orientada al cliente final) -->
                 <div id="tab-reparacion" class="tab-content active">
-                    <div class="info-text">
-                        <h2>Clínica y <span>Micro-cirugía</span> de Hardware</h2>
-                        <p>No des tu inversión por perdida. Somos un centro especializado en diagnóstico profundo y rescate electrónico. Intervenimos desde mantenimiento preventivo hasta micro-soldadura compleja para devolverle el rendimiento máximo a tus equipos personales o empresariales.</p>
+                    <div class="info-header">
+                        <h2>Tu tecnología en manos de expertos.</h2>
+                        <p>No arriesgues tu inversión. Brindamos diagnóstico preciso y reparación a nivel componente para computadoras de escritorio, laptops y dispositivos móviles. Rápidos, transparentes y con garantía.</p>
                     </div>
 
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-computer"></i> Reparación de Laptops y PC</h3>
-                            <p>Servicio correctivo y preventivo para Windows y arquitecturas Apple (MacBook/iMac). Rescatamos equipos que no encienden, solucionamos sobrecalentamientos y optimizamos la velocidad.</p>
-                            <ul class="service-list">
-                                <li><i class="fa-solid fa-check"></i> Actualización a Estado Sólido (SSD) y Memoria RAM.</li>
-                                <li><i class="fa-solid fa-check"></i> Reemplazo de displays, teclados y baterías.</li>
-                                <li><i class="fa-solid fa-check"></i> Limpieza profunda y cambio de pasta térmica.</li>
+                    <div class="service-card">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-laptop-medical"></i> Reparación de Laptops y PC</h3>
+                            <p>Especialistas en arquitecturas Windows y Apple (MacBook/iMac). Revivimos equipos lentos o que no encienden.</p>
+                            <ul class="check-list">
+                                <li><i class="fa-solid fa-circle-check"></i> Actualización a Estado Sólido (SSD) y RAM.</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Reemplazo de pantallas, teclados y baterías.</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Mantenimiento preventivo y limpieza térmica.</li>
                             </ul>
                         </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?q=80&w=600&auto=format&fit=crop" alt="PC Repair"></div>
+                        <div class="card-img">
+                            <!-- Foto más realista y humana -->
+                            <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?q=80&w=600&auto=format&fit=crop" alt="Técnico reparando laptop">
+                        </div>
                     </div>
 
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-microscope"></i> Micro-soldadura Avanzada</h3>
-                            <p>Cuando el daño está en la placa base (Motherboard), nuestro laboratorio entra en acción. Empleamos esquemáticos y tecnología térmica para reparar cortocircuitos a nivel de componentes integrados.</p>
-                            <ul class="service-list">
-                                <li><i class="fa-solid fa-check"></i> Rescate de datos en tarjetas lógicas muertas.</li>
-                                <li><i class="fa-solid fa-check"></i> Reparación de integrados de carga y video (IC).</li>
-                                <li><i class="fa-solid fa-check"></i> Reballing profesional de procesadores y gráficas.</li>
+                    <div class="service-card">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-microchip"></i> Micro-soldadura Avanzada</h3>
+                            <p>Reparamos directamente la tarjeta madre (Motherboard). Evita comprar un equipo nuevo por un pequeño cortocircuito interno.</p>
+                            <ul class="check-list">
+                                <li><i class="fa-solid fa-circle-check"></i> Reparación de integrados de carga y video.</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Reballing profesional de procesadores.</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Recuperación de datos en placas muertas.</li>
                             </ul>
                         </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=600&auto=format&fit=crop" alt="Micro Soldering"></div>
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=600&auto=format&fit=crop" alt="Micro-soldadura en placa base">
+                        </div>
                     </div>
 
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-mobile-retro"></i> Rescate de Smartphones</h3>
-                            <p>Servicio técnico corporativo y personal para dispositivos móviles. Utilizamos componentes de la más alta calidad para garantizar el funcionamiento perfecto de tus herramientas de trabajo diarias.</p>
-                            <ul class="service-list">
-                                <li><i class="fa-solid fa-check"></i> Cambio de pantallas OLED/LCD táctiles.</li>
-                                <li><i class="fa-solid fa-check"></i> Reemplazo de baterías degradadas.</li>
-                                <li><i class="fa-solid fa-check"></i> Restauración de sistemas y recuperación de acceso.</li>
+                    <div class="service-card">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-mobile-screen"></i> Servicio a Smartphones</h3>
+                            <p>Reparación de urgencia para mantener tu vida conectada. Usamos refacciones certificadas para máxima durabilidad.</p>
+                            <ul class="check-list">
+                                <li><i class="fa-solid fa-circle-check"></i> Cambio de pantallas estrelladas (OLED/LCD).</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Reemplazo rápido de centros de carga.</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Solución a problemas de software y bloqueos.</li>
                             </ul>
                         </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=600&auto=format&fit=crop" alt="Mobile Repair"></div>
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=600&auto=format&fit=crop" alt="Reparación de teléfono móvil">
+                        </div>
                     </div>
                 </div>
 
                 <!-- PESTAÑA 2: SOFTWARE -->
                 <div id="tab-software" class="tab-content">
-                    <div class="info-text">
-                        <h2>Desarrollo de Software <span>a la Medida</span></h2>
-                        <p>Diseñamos, programamos y desplegamos herramientas digitales que automatizan tus procesos y escalan tus ventas. Desde una página web corporativa hasta sistemas de gestión empresariales robustos y seguros.</p>
+                    <div class="info-header">
+                        <h2>Desarrollo de software que vende.</h2>
+                        <p>Diseñamos y programamos soluciones digitales que automatizan tus procesos y ayudan a tu empresa a captar más clientes en internet. Sitios rápidos, modernos y seguros.</p>
                     </div>
 
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-laptop-code"></i> Páginas Web y Tiendas Online</h3>
-                            <p>Creamos la sucursal digital de tu negocio. Interfaces modernas, optimizadas para móviles y enfocadas en convertir visitantes en clientes reales mediante diseño estratégico (UI/UX).</p>
+                    <div class="service-card">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-window-maximize"></i> Sitios Web y E-commerce</h3>
+                            <p>Creamos tu presencia oficial en internet. Diseños responsivos y optimizados para que tu negocio destaque frente a la competencia local.</p>
                         </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Web UI"></div>
+                        <div class="card-img"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop" alt="Diseño Web"></div>
                     </div>
 
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-database"></i> Sistemas Backend y Bases de Datos</h3>
-                            <p>Desarrollamos el cerebro de tu empresa. Creación de APIs, arquitecturas en la nube (Cloud) y bases de datos preparadas para soportar y proteger toda la información confidencial de tu negocio.</p>
+                    <div class="service-card">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-server"></i> Sistemas Backend (APIs)</h3>
+                            <p>Desarrollamos el motor lógico de tu empresa. Bases de datos seguras y arquitecturas en la nube para gestionar la información de tus clientes.</p>
                         </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?q=80&w=600&auto=format&fit=crop" alt="Backend API"></div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-mobile-screen-button"></i> Aplicaciones Móviles Pro</h3>
-                            <p>Conecta con tus clientes dondequiera que estén. Desarrollo de Apps nativas o híbridas (iOS y Android) para ofrecer servicios, reservas o gestión de productos directamente en su bolsillo.</p>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=600&auto=format&fit=crop" alt="Mobile App"></div>
+                        <div class="card-img"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&auto=format&fit=crop" alt="Programación Backend"></div>
                     </div>
                 </div>
 
-                <!-- PESTAÑA 3: SOPORTE IT -->
+                <!-- PESTAÑA 3: SOPORTE IT (B2B) -->
                 <div id="tab-soporte" class="tab-content">
-                    <div class="info-text">
-                        <h2>Soluciones Corporativas y <span>Soporte IT</span></h2>
-                        <p>Nos convertimos en el departamento de sistemas de tu empresa. Garantizamos que tu infraestructura técnica y tus redes operen al 100% todos los días, protegiendo tus datos contra amenazas cibernéticas.</p>
+                    <div class="info-header">
+                        <h2>Tu departamento de sistemas, a demanda.</h2>
+                        <p>Garantizamos que la tecnología de tu oficina funcione sin interrupciones. Desde el cableado de red hasta la protección contra virus, nosotros nos encargamos de todo.</p>
                     </div>
 
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-network-wired"></i> Redes LAN y Servidores</h3>
-                            <p>Instalación, cableado estructurado y configuración de servidores para oficinas. Optimizamos la velocidad de tu internet y protegemos tus archivos compartidos con respaldos automatizados.</p>
+                    <div class="service-card">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-network-wired"></i> Redes y Servidores</h3>
+                            <p>Instalación de cableado estructurado y configuración de servidores locales. Optimizamos tu internet y protegemos tus archivos compartidos.</p>
                         </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop" alt="Server Network"></div>
+                        <div class="card-img"><img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=600&auto=format&fit=crop" alt="Cuarto de servidores"></div>
                     </div>
 
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-laptop-file"></i> Despliegue de Software</h3>
-                            <p>Gestión masiva de equipos para tu personal. Instalación de Windows corporativo, paqueterías de ofimática, sistemas ERP y herramientas de seguridad (antivirus empresariales).</p>
+                    <div class="service-card">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-users-gear"></i> Gestión y Soporte IT</h3>
+                            <p>Asesoría para compra de equipos, instalación masiva de software (Windows, Office, ERPs) y auditorías de ciberseguridad para tu personal.</p>
                         </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?q=80&w=600&auto=format&fit=crop" alt="Software Setup"></div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-chalkboard-user"></i> Consultoría IT Estratégica</h3>
-                            <p>Te ayudamos a tomar las mejores decisiones tecnológicas para escalar tu negocio. Realizamos auditorías de seguridad y capacitamos a tu equipo en el uso de nuevas herramientas digitales.</p>
-                        </div>
-                        <div class="pillar-img"><img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600&auto=format&fit=crop" alt="IT Consulting"></div>
+                        <div class="card-img"><img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600&auto=format&fit=crop" alt="Consultoría corporativa"></div>
                     </div>
                 </div>
 
                 <!-- PESTAÑA 4: METODOLOGÍA -->
                 <div id="tab-metodologia" class="tab-content">
-                    <div class="info-text">
-                        <h2>Garantía y <span>Transparencia</span></h2>
-                        <p>El éxito de nuestros servicios radica en un marco de trabajo predecible y altamente profesional. No hay letras pequeñas ni costos ocultos; cada paso de nuestro proceso está diseñado para tu tranquilidad.</p>
+                    <div class="info-header">
+                        <h2>Trabajamos con total transparencia.</h2>
+                        <p>Odias las letras pequeñas, nosotros también. Nuestro proceso está diseñado para que siempre sepas exactamente qué le pasa a tu equipo, cuánto costará y cuándo estará listo.</p>
                     </div>
 
-                    <div class="image-showcase">
-                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop" alt="Metodología Nexo Tech Core">
+                    <div class="hero-img">
+                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop" alt="Atención al cliente en laboratorio">
                     </div>
 
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-magnifying-glass-chart"></i> 01. Diagnóstico Honesto</h3>
-                            <p>Revisamos tu equipo o analizamos tu idea de software a detalle. Te entregamos un reporte claro sobre el estado real de la situación antes de invertir un solo peso.</p>
+                    <div class="service-card">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-clipboard-check"></i> 1. Diagnóstico Honesto</h3>
+                            <p>Revisamos físicamente tu equipo o analizamos tu idea de software. Te explicamos el problema en palabras sencillas, sin tecnicismos innecesarios.</p>
                         </div>
                     </div>
 
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-file-invoice-dollar"></i> 02. Cotización Clara</h3>
-                            <p>Elaboramos una propuesta económica transparente detallando los costos de refacciones de alta calidad o las horas de desarrollo. Cero cobros sorpresivos.</p>
+                    <div class="service-card">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-file-signature"></i> 2. Cotización Previa</h3>
+                            <p>Te entregamos un presupuesto cerrado antes de hacer cualquier cambio. Si no apruebas el costo de la reparación o el desarrollo, no hacemos nada.</p>
                         </div>
                     </div>
 
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-gears"></i> 03. Ejecución Impecable</h3>
-                            <p>Trabajamos bajo estrictos estándares anti-estática en nuestro laboratorio o escribiendo código limpio y modular en nuestros servidores, protegiendo siempre tus datos.</p>
-                        </div>
-                    </div>
-
-                    <div class="service-pillar">
-                        <div class="pillar-desc">
-                            <h3><i class="fa-solid fa-shield-circle-check"></i> 04. Entrega con Garantía</h3>
-                            <p>Sometemos todo a rigurosas pruebas de estrés (control de calidad). Entregamos el proyecto funcionando perfectamente, respaldado por una garantía por escrito.</p>
+                    <div class="service-card">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-shield-halved"></i> 3. Entrega Garantizada</h3>
+                            <p>Realizamos rigurosas pruebas de calidad (estrés de hardware o testing de software). Todo trabajo se entrega funcionando al 100% y con garantía por escrito.</p>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Formulario de Conversión (Mejorado para Ventas) -->
-            <div class="contact-card">
-                <h3 id="form-title">Solicita una Cotización Gratuita</h3>
+            <!-- Panel de Contacto (Derecha) -->
+            <div class="contact-panel">
+                <h3 id="form-title">¿Necesitas ayuda técnica?</h3>
+                <p id="form-subtitle">Déjanos tus datos y un experto revisará tu caso para darte una solución rápida.</p>
+                
                 <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
                     
                     <input type="hidden" name="access_key" value="1d26aafe-706d-4478-ab0a-b3c30df427fa">
-                    <input type="hidden" id="selected-service" name="subject" value="Nueva cotización desde la web: Reparación">
+                    <input type="hidden" id="selected-service" name="subject" value="Nueva cotización web: Soporte y Reparación">
                     
-                    <div class="field" id="f-name">
-                        <label>Tu Nombre o Empresa</label>
-                        <input type="text" id="name" name="Nombre" placeholder="Ej. Juan Pérez" required>
-                        <span class="error-msg">Requerimos tu nombre para atenderte.</span>
+                    <div class="input-group" id="f-name">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="name" name="Nombre" placeholder="Ej. Carlos Mendoza" required>
+                        <span class="error-txt">Tu nombre es necesario para atenderte.</span>
                     </div>
-                    <div class="field" id="f-email">
-                        <label>Correo Electrónico</label>
-                        <input type="email" id="email" name="Email" placeholder="correo@ejemplo.com" required>
-                        <span class="error-msg">Por favor ingresa un correo válido.</span>
+                    
+                    <div class="input-group" id="f-phone">
+                        <label>Teléfono o WhatsApp</label>
+                        <input type="tel" id="phone" name="Telefono" placeholder="Para contactarte hoy mismo" maxlength="12" required>
+                        <span class="error-txt">Ingresa un número a 10 dígitos.</span>
                     </div>
-                    <div class="field" id="f-phone">
-                        <label>WhatsApp o Teléfono</label>
-                        <input type="tel" id="phone" name="Telefono" placeholder="Para respuesta rápida" maxlength="12" required>
-                        <span class="error-msg">Requerimos un teléfono de contacto a 10 dígitos.</span>
+
+                    <div class="input-group" id="f-email">
+                        <label>Correo (Opcional)</label>
+                        <input type="email" id="email" name="Email" placeholder="correo@ejemplo.com">
+                        <!-- El correo ya no es estrictamente requerido, reduce fricción en ventas locales -->
                     </div>
-                    <div class="field" id="f-message">
-                        <label>¿En qué te podemos ayudar hoy?</label>
-                        <textarea id="message" name="Mensaje" rows="3" placeholder="Describe brevemente la falla de tu equipo o tu idea de proyecto..." required></textarea>
-                        <span class="error-msg">Cuéntanos un poco sobre lo que necesitas.</span>
+                    
+                    <div class="input-group" id="f-message">
+                        <label>¿Cuál es el problema?</label>
+                        <textarea id="message" name="Mensaje" rows="3" placeholder="Ej. Mi laptop no enciende / Necesito una página web..." required></textarea>
+                        <span class="error-txt">Por favor, detalla un poco tu necesidad.</span>
                     </div>
-                    <!-- Botón de Llamada a la Acción de alto contraste -->
-                    <button type="submit" class="btn-send"><i class="fa-solid fa-paper-plane"></i> Enviar Solicitud Ahora</button>
+                    
+                    <button type="submit" class="btn-submit">Solicitar Cotización</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal de confirmación -->
+    <!-- Modal Status -->
     <div id="statusModal" class="modal-overlay">
-        <div class="modal-card">
-            <i id="modalIcon" class="fa-solid modal-status-icon"></i>
-            <h3 id="modalTitle">Mensaje Enviado</h3>
-            <p id="modalMessage">Hemos recibido tu información correctamente.</p>
-            <button type="button" onclick="closeModal()" class="btn-modal-close">Aceptar</button>
+        <div class="modal-box">
+            <i id="modalIcon" class="fa-solid modal-icon"></i>
+            <h3 id="modalTitle">Solicitud Recibida</h3>
+            <p id="modalMessage">Nos pondremos en contacto contigo lo más pronto posible.</p>
+            <button type="button" onclick="closeModal()" class="btn-close-modal">Entendido</button>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Nexo Tech Core. Garantía y Profesionalismo IT.</p>
-        <div class="footer-socials">
-            <a href="#" target="_blank" class="social-icon" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" target="_blank" class="social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" target="_blank" class="social-icon" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-        </div>
+        <p>&copy; 2026 Nexo Tech Core. Todos los derechos reservados.</p>
     </footer>
 
     <script>
-        // Textos del formulario persuasivos según la pestaña seleccionada
-        const formTitles = {
-            reparacion: "Cotiza tu Reparación Hoy",
-            software: "Cotiza tu Nuevo Software",
-            soporte: "Pide Asesoría Técnica",
-            metodologia: "Contáctanos Ahora"
+        const formConfig = {
+            reparacion: { title: "¿Tu equipo falla?", sub: "Describe el problema y te daremos un diagnóstico preliminar rápido." },
+            software: { title: "Cotiza tu Proyecto", sub: "Cuéntanos sobre tu idea de software o sitio web y la haremos realidad." },
+            soporte: { title: "Soporte para Empresas", sub: "Solicita una auditoría para tu red o infraestructura IT." },
+            metodologia: { title: "Contáctanos", sub: "Estamos listos para resolver cualquier duda sobre nuestros procesos." }
         };
 
         function changeTab(targetTab, buttonElement) {
@@ -449,99 +443,28 @@
             const targetContent = document.getElementById(`tab-${targetTab}`);
             if(targetContent) targetContent.classList.add('active');
 
-            document.getElementById('form-title').textContent = formTitles[targetTab];
-            document.getElementById('selected-service').value = "Nueva cotización web sobre: " + buttonElement.textContent.trim();
+            document.getElementById('form-title').textContent = formConfig[targetTab].title;
+            document.getElementById('form-subtitle').textContent = formConfig[targetTab].sub;
+            document.getElementById('selected-service').value = "Interesado en: " + buttonElement.textContent.trim();
             document.querySelector('.content-dynamic').scrollTop = 0;
         }
 
+        // Modal functions
         function openModal(isSuccess, title, message) {
             const overlay = document.getElementById('statusModal');
             const icon = document.getElementById('modalIcon');
-            const titleEl = document.getElementById('modalTitle');
-            const msgEl = document.getElementById('modalMessage');
-
-            icon.className = isSuccess ? "fa-solid fa-circle-check modal-status-icon success" : "fa-solid fa-circle-xmark modal-status-icon error";
-            titleEl.textContent = title;
-            msgEl.textContent = message;
+            
+            icon.className = isSuccess ? "fa-solid fa-circle-check modal-icon success" : "fa-solid fa-triangle-exclamation modal-icon error";
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
 
             overlay.classList.add('active');
         }
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
-        });
+        function closeModal() { document.getElementById('statusModal').classList.remove('active'); }
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-        function closeModal() {
-            document.getElementById('statusModal').classList.remove('active');
-        }
-
-        /* --- Canvas Interactivo (Actualizado para Tema Claro) --- */
-        const canvas = document.getElementById('networkCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let mouse = { x: null, y: null, radius: 160 };
-
-        function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-        window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.5; this.speedY = (Math.random() - 0.5) * 0.5;
-            }
-            update() {
-                this.x += this.speedX; this.y += this.speedY;
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-            }
-            draw() {
-                // Partículas color azul corporativo suaves
-                ctx.fillStyle = 'rgba(0, 86, 179, 0.25)';
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-            }
-        }
-
-        function createParticles() {
-            particles = []; const count = (canvas.width * canvas.height) / 8500;
-            for (let i = 0; i < count; i++) particles.push(new Particle());
-        }
-
-        function connect() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x; const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 110) {
-                        // Líneas de conexión grisáceas
-                        ctx.strokeStyle = `rgba(100, 116, 139, ${0.12 - dist/900})`;
-                        ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
-                    }
-                }
-                if (mouse.x != null) {
-                    const mdx = particles[i].x - mouse.x; const mdy = particles[i].y - mouse.y;
-                    const mdist = Math.sqrt(mdx*mdx + mdy*mdy);
-                    if (mdist < mouse.radius) {
-                        // Enlace con el mouse en color azul
-                        ctx.strokeStyle = `rgba(0, 86, 179, ${0.6 - mdist/mouse.radius})`;
-                        ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            connect(); requestAnimationFrame(animate);
-        }
-
-        initCanvas(); createParticles(); animate();
-        window.addEventListener('resize', () => { initCanvas(); createParticles(); });
-        /* ---------------------------------------------------- */
-
-        // Formato de teléfono
+        // Phone formatter
         const phoneInput = document.getElementById('phone');
         phoneInput.addEventListener('input', (e) => {
             let v = e.target.value.replace(/\D/g, '');
@@ -555,22 +478,27 @@
             e.target.value = f;
         });
 
-        // Validación y Envío del Formulario
+        // Form Validation & Submit
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             let valid = true;
-            document.querySelectorAll('.field').forEach(f => f.classList.remove('error'));
+            document.querySelectorAll('.input-group').forEach(f => f.classList.remove('error'));
 
             if (document.getElementById('name').value.trim().length < 3) { document.getElementById('f-name').classList.add('error'); valid = false; }
-            if (!document.getElementById('email').value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) { document.getElementById('f-email').classList.add('error'); valid = false; }
             if (phoneInput.value.replace(/\s/g, '').length !== 10) { document.getElementById('f-phone').classList.add('error'); valid = false; }
             if (document.getElementById('message').value.trim() === "") { document.getElementById('f-message').classList.add('error'); valid = false; }
+            
+            // Email is now optional, but validate if entered
+            const emailVal = document.getElementById('email').value;
+            if (emailVal.length > 0 && !emailVal.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                document.getElementById('f-email').classList.add('error'); valid = false;
+            }
 
             if (valid) {
-                const btn = this.querySelector('.btn-send');
+                const btn = this.querySelector('.btn-submit');
                 const originalText = btn.innerHTML;
                 
-                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Enviando...';
+                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Procesando...';
                 btn.disabled = true;
 
                 fetch(this.action, {
@@ -580,15 +508,13 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        openModal(true, "¡Cotización Solicitada!", "Hemos recibido tus datos con éxito. En breve un experto se comunicará contigo.");
+                        openModal(true, "¡Datos Enviados!", "Hemos recibido tu información. Un técnico de Nexo Tech Core se comunicará contigo en breve.");
                         this.reset();
                     } else {
-                        openModal(false, "Hubo un pequeño error", "El servidor está ocupado. Por favor, utiliza el botón flotante de WhatsApp para una respuesta inmediata.");
+                        openModal(false, "Error de Servidor", "No pudimos procesar tu solicitud. Por favor, usa el botón de WhatsApp.");
                     }
                 })
-                .catch(error => {
-                    openModal(false, "Fallo en la conexión", "Revisa tu conexión a internet e inténtalo de nuevo.");
-                })
+                .catch(() => openModal(false, "Sin Conexión", "Revisa tu conexión a internet e intenta enviar el formulario nuevamente."))
                 .finally(() => {
                     btn.innerHTML = originalText; 
                     btn.disabled = false;
